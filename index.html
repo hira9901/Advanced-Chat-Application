@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="purple">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatSphere Pro - Ultra WhatsApp</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- ================= AUTH SCREEN ================= -->
+    <div id="auth-screen" class="screen active">
+        <div class="auth-card">
+            <div class="app-logo">
+                <i class="fa-solid fa-comments-dots"></i>
+                <h2>ChatSphere Pro</h2>
+                <p>Advanced Realtime Messaging Experience</p>
+            </div>
+            
+            <div class="tab-btns">
+                <button id="login-tab-btn" class="active">Login</button>
+                <button id="signup-tab-btn">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form">
+                <div class="input-group">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" id="login-email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="login-password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="auth-btn">Login to ChatSphere</button>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signup-form" class="auth-form hidden">
+                <div class="input-group">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="signup-name" placeholder="Full Name" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" id="signup-email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="signup-password" placeholder="Password (min 6 chars)" required>
+                </div>
+                <button type="submit" class="auth-btn">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= MAIN APPLICATION ================= -->
+    <div id="chat-screen" class="screen">
+        <div class="whatsapp-layout">
+            
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <div class="user-profile-toggle" id="open-profile-modal">
+                        <div class="avatar-wrapper">
+                            <div class="avatar" id="user-avatar">U</div>
+                        </div>
+                        <span id="current-username">Username</span>
+                    </div>
+                    <div class="sidebar-actions">
+                        <button id="open-status-btn" title="Status Stories">
+                            <i class="fa-solid fa-circle-notch"></i>
+                        </button>
+                        <button id="open-group-modal" title="New Group">
+                            <i class="fa-solid fa-users-rectangle"></i>
+                        </button>
+                        <div class="theme-selector">
+                            <select id="theme-select" title="Choose Theme">
+                                <option value="purple">💜 Purple Haze</option>
+                                <option value="cyberpunk">⚡ Neon Cyber</option>
+                                <option value="emerald">🌿 Emerald Mint</option>
+                                <option value="midnight">🌙 Midnight Dark</option>
+                            </select>
+                        </div>
+                        <button id="logout-btn" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></button>
+                    </div>
+                </div>
+
+                <!-- Search -->
+                <div class="sidebar-search">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="chat-search" placeholder="Search conversations...">
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="chat-tabs">
+                    <button class="chat-tab-btn active" data-target="direct-list">Direct</button>
+                    <button class="chat-tab-btn" data-target="group-list">Groups</button>
+                </div>
+
+                <!-- Chat Lists -->
+                <div class="chats-lists">
+                    <div id="direct-list" class="chat-list active"></div>
+                    <div id="group-list" class="chat-list"></div>
+                </div>
+            </div>
+
+            <!-- Chat Panel -->
+            <div class="chat-main-panel">
+                <div id="chat-placeholder" class="chat-placeholder">
+                    <div class="placeholder-icon">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <h3>ChatSphere Pro Web</h3>
+                    <p>Select a contact or open a group to start messaging.</p>
+                </div>
+
+                <div id="active-chat-container" class="active-chat-container hidden">
+                    <header class="chat-header">
+                        <div class="user-profile">
+                            <div class="avatar" id="active-avatar">A</div>
+                            <div>
+                                <h3 id="active-chat-title">Chat Name</h3>
+                                <div class="status-indicator">
+                                    <span class="status-dot" id="active-status-dot"></span> 
+                                    <small id="active-chat-status">Offline</small>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div id="messages-container" class="messages-container"></div>
+
+                    <!-- Typing Indicator -->
+                    <div id="typing-indicator" class="typing-indicator hidden">
+                        <div class="typing-dots"><span></span><span></span><span></span></div>
+                        <small id="typing-text"></small>
+                    </div>
+
+                    <!-- Emoji Bar -->
+                    <div class="emoji-bar">
+                        <span onclick="addEmoji('😊')">😊</span>
+                        <span onclick="addEmoji('😂')">😂</span>
+                        <span onclick="addEmoji('❤️')">❤️</span>
+                        <span onclick="addEmoji('🔥')">🔥</span>
+                        <span onclick="addEmoji('👍')">👍</span>
+                        <span onclick="addEmoji('🚀')">🚀</span>
+                        <span onclick="addEmoji('🎉')">🎉</span>
+                        <span onclick="addEmoji('😎')">😎</span>
+                        <span onclick="addEmoji('🙏')">🙏</span>
+                        <span onclick="addEmoji('✨')">✨</span>
+                    </div>
+
+                    <!-- Chat Input Area -->
+                    <form id="chat-form" class="chat-input-area">
+                        <label for="media-file-input" class="media-attach-btn" title="Send Media">
+                            <i class="fa-solid fa-paperclip"></i>
+                        </label>
+                        <input type="file" id="media-file-input" accept="image/*,video/*" style="display: none;">
+                        
+                        <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off">
+                        
+                        <button type="button" id="mic-btn" title="Record Voice"><i class="fa-solid fa-microphone"></i></button>
+                        <button type="submit" id="send-btn" title="Send Message"><i class="fa-solid fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MODALS & OVERLAYS ================= -->
+    <!-- Profile Modal -->
+    <div id="profile-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Profile Settings</h3>
+            <div class="input-group" style="margin: 15px 0;">
+                <input type="text" id="profile-name-input" placeholder="Your Display Name">
+            </div>
+            <div class="input-group" style="margin: 15px 0;">
+                <input type="text" id="profile-bio-input" placeholder="About / Bio Status">
+            </div>
+            <div class="modal-actions">
+                <button id="save-profile-btn" class="auth-btn">Save Changes</button>
+                <button id="close-profile-modal" class="auth-btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Group Creation Modal -->
+    <div id="group-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Create New Group</h3>
+            <div class="input-group" style="margin: 15px 0;">
+                <input type="text" id="group-name-input" placeholder="Group Name">
+            </div>
+            <p style="font-size: 13px; color: var(--text-light); margin-bottom: 8px;">Select Group Members:</p>
+            <div id="group-members-list" class="group-members-list"></div>
+            <div class="modal-actions" style="margin-top: 15px;">
+                <button id="create-group-btn" class="auth-btn">Create Group</button>
+                <button id="close-group-modal" class="auth-btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Modal with Drag & Drop -->
+    <div id="status-modal" class="modal hidden">
+        <div class="modal-content" style="max-width: 460px;">
+            <h3>Status Updates</h3>
+            <div class="status-upload-box">
+                <input type="text" id="status-text-input" placeholder="Compose status message...">
+                <button id="upload-status-btn" class="auth-btn">Post Text</button>
+            </div>
+            
+            <div id="drop-zone" class="drop-zone">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <p>Drag & Drop photos/videos here or <span id="browse-link" style="color:var(--primary); cursor:pointer; text-decoration:underline;">Browse</span></p>
+                <input type="file" id="status-file-input" accept="image/*,video/*" style="display:none;">
+            </div>
+            <div id="file-preview-indicator" style="font-size: 12px; color: var(--primary); margin-top: 6px; text-align: center;"></div>
+
+            <div id="status-feed" class="status-feed" style="margin-top: 12px;"></div>
+            <div class="modal-actions" style="margin-top: 15px;">
+                <button id="close-status-modal" class="auth-btn btn-secondary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full-screen WhatsApp Story Player -->
+    <div id="story-player" class="story-player hidden">
+        <div class="story-progress-bar"><div id="story-progress" class="story-progress"></div></div>
+        <div class="story-header">
+            <div class="avatar" id="story-avatar">U</div>
+            <div class="story-author-info">
+                <h4 id="story-author-name">User Name</h4>
+                <small id="story-time">Just now</small>
+            </div>
+            <button id="close-story-player"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="story-content" class="story-content"></div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    
+    <script src="app.js" type="module"></script>
+</body>
+</html>
